@@ -1,4 +1,4 @@
-import { generateText } from "ai";
+import { generateText, streamText } from "ai";
 
 import { google } from "@ai-sdk/google";
 
@@ -12,8 +12,18 @@ export const answerMyQuestion = async (question: string) => {
   return text;
 };
 
-const answer = await answerMyQuestion(
-  "What is the shortest executable program?"
-);
+export const streamMyQuestion = async (question: string) => {
+  const { textStream, text } = await streamText({
+    model,
+    prompt: question,
+  });
+  for await (const chunk of textStream) {
+    process.stdout.write(chunk);
+  }
+  return text;
+};
 
-console.log(answer);
+// Example usage
+const question =
+  "How can AI be applied to agriculture in developing countries?";
+await streamMyQuestion(question);
