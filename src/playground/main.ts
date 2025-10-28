@@ -1,4 +1,4 @@
-import { generateText, streamText } from "ai";
+import { generateText, streamText, type LanguageModel } from "ai";
 
 import { google } from "@ai-sdk/google";
 
@@ -37,9 +37,18 @@ export const systemPromptAnswerQuestion = async (question: string) => {
   return text;
 };
 
+// Easy model switching
+export const ask = async (question: string, model: LanguageModel) => {
+  const { text } = await generateText({
+    model,
+    prompt: question,
+  });
+  return text;
+};
+
 // Example usage
 const question =
   "How can access to AI tools be democratized to benefit smallholder farmers in developing countries?";
 
-const answer = await systemPromptAnswerQuestion(question);
+const answer = await ask(question, model);
 console.log("Answer: \n", answer);
