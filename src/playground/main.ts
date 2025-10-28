@@ -23,7 +23,22 @@ export const streamMyQuestion = async (question: string) => {
   return text;
 };
 
+export const systemPromptAnswerQuestion = async (question: string) => {
+  const systemPrompt =
+    "You are an expert in agriculture and sustainable development.";
+  const { text } = await generateText({
+    model,
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: question },
+    ],
+  });
+  return text;
+};
+
 // Example usage
 const question =
-  "How can AI be applied to agriculture in developing countries?";
-await streamMyQuestion(question);
+  "How can access to AI tools be democratized to benefit smallholder farmers in developing countries?";
+
+const answer = await systemPromptAnswerQuestion(question);
+console.log("Answer: \n", answer);
