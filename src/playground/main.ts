@@ -2,6 +2,7 @@ import { generateText, streamText } from "ai";
 
 import { google } from "@ai-sdk/google";
 
+// Add the env variable GOOGLE_GENERATIVE_AI_API_KEY to your .env.local file
 const model = google("gemini-2.5-flash");
 
 export const answerMyQuestion = async (question: string) => {
